@@ -8,5 +8,5 @@ module ALU(input A, input B, input [3:0]S, output G, output Z, output N, output 
         3'b100: assign G = A & B
         3'b101: assign G = A | B
         3'b110: assign G = A^B
-        3'b000: assign G = A + [0]S
-        endcase
+        3'b000: assign G = ~A + [0]S
+    endcase
