@@ -1,13 +1,16 @@
-module shifter(input [15:0]B, input [1:0]S, output H, output Il, output Ir);
-    case S:
-        2'b00: assign H = B
-        2'b01:  begin
-                    assign Il = [15]B;
-                    assign H = B << 1;
+module shifter(input clock, input [15:0]B, input [3:0]S, output reg [15:0]H, output reg Il, output reg Ir);
+    always @clock begin
+    case (S)
+        3'b0000: H = B;
+        3'b0010:  begin
+                    Il = B[15];
+                    H = B << 1;
                 end
-        2'b10: begin
-                    assign Ir = [0]B;  
-                    assign H = B >> 1;
+        3'b0100: begin
+                    Ir = B[0];  
+                    H = B >> 1;
                 end
 
     endcase
+end
+endmodule

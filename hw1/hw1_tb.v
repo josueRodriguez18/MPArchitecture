@@ -1,4 +1,4 @@
-
+`timescale 1ns/1ps
 module hw1_tb();
     reg a = 0;
     reg b = 0;
