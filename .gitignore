@@ -4,3 +4,6 @@ vivado_rework/
 *.gz
 *.docx
 *.pdf
+*.png
+*.psd
+/notes
