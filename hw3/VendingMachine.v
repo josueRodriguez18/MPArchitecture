@@ -1,8 +1,8 @@
-module VendingMachine(input [4:0]cash, input reg [4:0]coins, input [5:0]coke)
+module VendingMachine(input [4:0]cash, input reg [4:0]coins, input [5:0]coke, input clk)
     parameter price = 1.5;
     parameter running = 0;
-    parameter 
-    
+    parameter STATE0;
+    //need to do states
     case(cash): begin
             5'b10000: assign running = running + 1;
             5'b01000: assign running = running + .5;
