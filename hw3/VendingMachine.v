@@ -1,26 +1,23 @@
-module VendingMachine(input [4:0]cash, input reg [4:0]coin, input [5:0]coke, input clk, input );
+module VendingMachine(input [4:0]cash, input [4:0]coin, input [5:0]coke, input clk);
     reg [5:0]sel;
     assign coke = sel;
     parameter price = 150;
     parameter running = 0;
-    parameter IDLE;
-    parameter FIVE;
-    parameter TEN;
-    parameter FIFTEEN;
-    parameter TWENTY;
-    parameter TWENTYFIVE;
-    parameter counter = 0;
-    parameter NICKEL;
-    parameter DIME;
-    parameter QUARTER;
-    parameter HALFD;
-    parameter FULLD;
+    parameter IDLE = 0;
+    parameter FIVE = 1;
+    parameter TEN = 2;
+    parameter FIFTEEN = 3;
+    parameter TWENTY = 4;
+    parameter TWENTYFIVE = 5;
+    parameter NICKEL =  5'b00001;
+    parameter DIME =    5'b00010;
+    parameter QUARTER = 5'b00100;
+    parameter HALFD =   5'b01000;
+    parameter FULLD =   5'b10000;
     //need to do states
-    wire item[2:0];
-    reg state, reg next_state;
-    always @(state or coin or count)
+    reg state; reg next_state = IDLE; reg [2:0]counter = 3'b0; reg [6:0]change;
+    always @(state or coin)
         begin
-        next_state = IDLE;
             case(state)
                 IDLE:
                     case(coin)
@@ -29,7 +26,7 @@ module VendingMachine(input [4:0]cash, input reg [4:0]coin, input [5:0]coke, inp
                         QUARTER: 
                             begin
                                 next_state = state;
-                                counter = counter + 1;
+                               counter = counter + 1'b1;
                             end
                         HALFD:
                             begin 
@@ -71,7 +68,7 @@ module VendingMachine(input [4:0]cash, input reg [4:0]coin, input [5:0]coke, inp
                         QUARTER: 
                             begin
                                 next_state = state;
-                                counter = counter + 1
+                                counter = counter + 1;
                             end
                         HALFD:
                             begin
@@ -131,28 +128,17 @@ module VendingMachine(input [4:0]cash, input reg [4:0]coin, input [5:0]coke, inp
                                 next_state = state;
                                 counter = counter + 4;
                             end
-                        default: next_state=TWENTY; 
-                    endcase
+                        default: next_state=TWENTY;
+                        endcase
             endcase
-        if (counter >= 6) // change calculation
+        if(counter >= 6)
             begin
-                change = (6 - counter)*25 + state
+                change = (6 - counter)*25 + state;
             end
     
-    
+end
 //max change is 95 cents
     
-    
-    
-    if(running >= price): begin
-        case(coins): begin
-            5'b10000: //half dollar
-                begin
-                    assign running = cash - 50;
-                end
-            
-                    endcase
-        end
     
 
 
