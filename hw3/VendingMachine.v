@@ -1,4 +1,4 @@
-module VendingMachine(input [4:0]cash, input reg [4:0]coin, input [5:0]coke, input clk, input )
+module VendingMachine(input [4:0]cash, input reg [4:0]coin, input [5:0]coke, input clk, input );
     reg [5:0]sel;
     assign coke = sel;
     parameter price = 150;
@@ -134,6 +134,10 @@ module VendingMachine(input [4:0]cash, input reg [4:0]coin, input [5:0]coke, inp
                         default: next_state=TWENTY; 
                     endcase
             endcase
+        if (counter >= 6) // change calculation
+            begin
+                change = (6 - counter)*25 + state
+            end
     
     
 //max change is 95 cents
